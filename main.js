@@ -68,7 +68,7 @@ window.addEventListener('load', function() {
 });
 
 try {
-  window.addEventListener('scroll', _.throttle(scrollDepth.getScrollDepth, THROTTLE_RATE));
+  window.addEventListener('resize', _.debounce(scrollDepth.init, 100));
 } catch (e) {
   console.error(e, 'Debounce method unavailable');
 }
