@@ -34,7 +34,7 @@ const scrollDepth = {
       if ((percentScrolled >= pageMarkers[i] && percentScrolled < pageMarkers[i + 1]) && currentScrollMarker !== pageMarkers[i]) {
         currentScrollMarker = pageMarkers[i];
         scrollDepth.emitDataLayerEvt(pageMarkers[i]);
-      } else if (percentScrolled === pageMarkers[pageMarkers.length - 1]) {
+      } else if ((percentScrolled === pageMarkers[pageMarkers.length - 1]) && currentScrollMarker !== pageMarkers[pageMarkers.length - 1]) {
         currentScrollMarker = pageMarkers[pageMarkers.length - 1];
         scrollDepth.emitDataLayerEvt(pageMarkers[pageMarkers.length - 1]);
       }
