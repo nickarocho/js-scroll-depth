@@ -9,7 +9,12 @@ const scrollMarkerEl = document.querySelector('#scroll-marker');
 
 const scrollDepth = {
   init() {
-    window.addEventListener('scroll', _.throttle(scrollDepth.getScrollDepth, THROTTLE_RATE));
+    try {
+      window.addEventListener('scroll', _.throttle(scrollDepth.getScrollDepth, THROTTLE_RATE));
+    } catch (e) {
+      window.addEventListener('scroll', scrollDepth.poorManThrottle(scrollDepth.getScrollDepth, THROTTLE_RATE));
+      console.error(e, 'Firing poor man throttle');
+    }
     windowHeight = scrollDepth.getWindowHeight();
     docHeight = scrollDepth.getDocumentHeight();
     trackLength = docHeight - windowHeight
@@ -43,11 +48,27 @@ const scrollDepth = {
   },
   emitDataLayerEvt(val) {
     scrollMarkerEl.textContent = `${val}%`;
-  }
+  },
+  poorManThrottle(callback, limit) {
+    var tick = false;
+    return function () {
+      if (!tick) {
+        callback.call();
+        tick = true;
+        setTimeout(function () {
+          tick = false;
+        }, limit);
+      }
+    }
+  },
 }
 
 window.addEventListener('load', function() {
   scrollDepth.init();
 });
 
-window.addEventListener('resize', _.debounce(scrollDepth.init, 100));
+try {
+  window.addEventListener('scroll', _.throttle(scrollDepth.getScrollDepth, THROTTLE_RATE));
+} catch (e) {
+  console.error(e, 'Debounce method unavailable');
+}
