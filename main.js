@@ -30,31 +30,14 @@ const scrollDepth = {
     const scrollTop = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop;
     const percentScrolled = Math.floor(scrollTop / trackLength * 100);
     percentEl.textContent = `${percentScrolled}%`;
-    switch (true) {
-      case percentScrolled >= pageMarkers[0] && percentScrolled < pageMarkers[1] :
-        if (currentScrollMarker != pageMarkers[0]) {
-          scrollDepth.emitDataLayerEvt(pageMarkers[0]);
-          currentScrollMarker = pageMarkers[0];
-        }
-        break;
-      case percentScrolled >= pageMarkers[1] && percentScrolled < pageMarkers[2] :
-        if (currentScrollMarker != pageMarkers[1]) {
-          scrollDepth.emitDataLayerEvt(pageMarkers[1]);
-          currentScrollMarker = pageMarkers[1];
-        }
-        break;
-      case percentScrolled >= pageMarkers[2] && percentScrolled < pageMarkers[3] :
-        if (currentScrollMarker != pageMarkers[2]) {
-          scrollDepth.emitDataLayerEvt(pageMarkers[2]);
-          currentScrollMarker = pageMarkers[2];
-        }
-        break;
-      case percentScrolled >= pageMarkers[3] :
-        if (currentScrollMarker != pageMarkers[3]) {
-          scrollDepth.emitDataLayerEvt(pageMarkers[3]);
-          currentScrollMarker = pageMarkers[3]
-        }
-        break;
+    for (let i = 0; i < pageMarkers.length; i++) {
+      if ((percentScrolled >= pageMarkers[i] && percentScrolled < pageMarkers[i + 1]) && currentScrollMarker !== pageMarkers[i]) {
+        currentScrollMarker = pageMarkers[i];
+        scrollDepth.emitDataLayerEvt(pageMarkers[i]);
+      } else if (percentScrolled === pageMarkers[pageMarkers.length - 1]) {
+        currentScrollMarker = pageMarkers[pageMarkers.length - 1];
+        scrollDepth.emitDataLayerEvt(pageMarkers[pageMarkers.length - 1]);
+      }
     }
   },
   emitDataLayerEvt(val) {
