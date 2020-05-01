@@ -5,7 +5,7 @@ const THROTTLE_RATE = 150;
 const percentEl = document.querySelector('#percent');
 const pageHeightEl = document.querySelector('#page-height');
 const windowHeightEl = document.querySelector('#window-height');
-const scrollMarkerEl = document.querySelector('.scroll-marker h3');
+const scrollMarkerEl = document.querySelector('#scroll-marker');
 
 const scrollDepth = {
   init() {
@@ -42,7 +42,6 @@ const scrollDepth = {
     }
   },
   emitDataLayerEvt(val) {
-    console.log(`EMIT DATALAYER EVENT: ${val}% scrolled`);
     scrollMarkerEl.textContent = `${val}%`;
   }
 }
@@ -50,4 +49,5 @@ const scrollDepth = {
 window.addEventListener('load', function() {
   scrollDepth.init();
 });
+
 window.addEventListener('resize', _.debounce(scrollDepth.init, 100));

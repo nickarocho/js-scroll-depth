@@ -56,6 +56,7 @@ header, footer {
   width: 100%;
   min-height: 100px;
   margin: 10px 0;
+  border-radius: 5px;
 }
 
 .scroll-marker {
@@ -71,7 +72,7 @@ header, footer {
   margin: 10px;
   border-radius: 50%;
   background: white;
-  border: 5px solid black;
+  border: 5px solid #333;
 }
 
 .scroll-marker.wrapper {
@@ -79,20 +80,19 @@ header, footer {
 }
 
 aside h4 {
-  font-size: .5em;
-}
-
-aside span {
   position: absolute;
-  top: -10px;
-  right: 0;
+  top: -23px;
+  right: -20px;
   padding: 0 7px;
-  line-height: 0;
+  font-size: .8em;
+  line-height: 1em;
+  width: 100px;
 }
 
 span {
   display: inline-block;
   background: coral;
+  color: white;
   transform: rotate(7deg);
   padding: 2px 4px;
 }
